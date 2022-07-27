@@ -57,9 +57,6 @@ public class MemberService {
 
 
 
-
-            CallableStatement callableStatement = null;
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
