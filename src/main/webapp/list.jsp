@@ -1,7 +1,9 @@
-<%@ page import="db.MemberService" %>
+
 <%@ page import="static sun.misc.Version.print" %>
 <%@ page import="java.util.List" %>
-<%@ page import="db.Member" %>
+<%@ page import="db.Data" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="db.GetApi" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -19,9 +21,12 @@
 </head>
 <body>
 <%
-    MemberService memberService = new MemberService();
-    List<Member> memberList = memberService.list();
 
+    GetApi getApi = new GetApi();
+    String str2="";
+   int a = getApi.getCount();
+    System.out.println(a);
+    ArrayList<Data> resultList = getApi.getData(a);
 
 %>
 
@@ -46,31 +51,71 @@
         <th>X좌표</th>
         <th>Y좌표</th>
         <th>작업일자</th>
+
     </tr>
     </thead>
     <tbody>
+
     <tr><%
-        for (Member member : memberList){
+//    String str1 = resultList.get(0).getX_SWIFI_MGR_NO();
+        {
             %>
     <tr>
         <td>
-            <%=member.getMemberType()%>
+
         </td>
         <td>
-            <a href="detail.jsp?memberType=<%=member.getMemberType()%>&userId=<%=member.getUserId()%>">
-                <%=member.getUserId()%>
-            </a>
+
         </td>
         <td>
-            <%=member.getPassword()%>
+
+
         </td>
         <td>
-            <%=member.getName()%>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
         </td>
     </tr>
 
     <%
-
         }
     %>
     </tr>
@@ -81,6 +126,5 @@
 
 
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
 </body>
 </html>
