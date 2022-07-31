@@ -1,6 +1,7 @@
 package db;
 
 public class Data {
+
     //거리
     private String distance;
     //관리번호

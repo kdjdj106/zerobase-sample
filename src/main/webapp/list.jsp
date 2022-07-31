@@ -24,14 +24,14 @@
 
     GetApi getApi = new GetApi();
 
-   int a = getApi.getCount();
+    int a = getApi.getCount();
     System.out.println(a);
     ArrayList<Data> resultList = getApi.getData(a);
 
 %>
 
-<h1><%= a + "개의 리스트를 저장하였습니다."%></h1>
-<a href="http://localhost:8080http://localhost:8080/zerobase_study_sample_war_exploded/home.jsp"홈으로 돌아가기> </a>
+<h1><%= resultList.size() + "개의 리스트를 저장하였습니다."%></h1> 가운데 정렬
+<a href="http://localhost:8080/zerobase_study_sample_war_exploded/home.jsp">홈으로 돌아가기 </a>
 
 <table>
     <thead>
@@ -44,5 +44,9 @@
 
 
 <br/>
+<script language="JavaScript">
+let test = "<%= resultList %>" ;
+console.log(test)
+</script>
 </body>
 </html>
