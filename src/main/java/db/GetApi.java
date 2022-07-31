@@ -175,8 +175,12 @@ public class GetApi {
             }
 
 //            int a2= Integer.parseInt(end);
-            if (Integer.parseInt(end) == count)
+            if (Integer.parseInt(end) == count){
+                start = Integer.toString(1);
+                end = Integer.toString(1000);
                 break;
+            }
+
             start = Integer.toString(Integer.parseInt(end)+1);
             end = Integer.toString(Integer.parseInt(end) + 1000);
             if (Integer.parseInt(end) >= count) {
@@ -244,7 +248,7 @@ public class GetApi {
         return result;
     }
 
-    public static void main(String[] args) {
+    public static void _main(String[] args) {
         GetApi getApi = new GetApi();
         System.out.println(getApi.getCount());
         resultList = getApi.getData(getApi.getCount());

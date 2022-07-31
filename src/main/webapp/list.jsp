@@ -27,12 +27,24 @@
     int a = getApi.getCount();
     System.out.println(a);
     ArrayList<Data> resultList = getApi.getData(a);
+    session.setAttribute("list", resultList);
+
 
 %>
+<%--    <form action="home.jsp" method="post">--%>
+<%--       <%--%>
+<%--           //request.setAttribute("list", resultList);--%>
 
-<h1><%= resultList.size() + "개의 리스트를 저장하였습니다."%></h1> 가운데 정렬
-<a href="http://localhost:8080/zerobase_study_sample_war_exploded/home.jsp">홈으로 돌아가기 </a>
-
+<%--           request.setAttribute("test", "test");--%>
+<%--           System.out.println("함수실행?");--%>
+<%--       %>--%>
+<%--    </form>--%>
+<div style="text-align: center;">
+<h1><%= resultList.size() + "개의 리스트를 저장하였습니다."%></h1>
+<a href="http://localhost:8080/zerobase_study_sample_war_exploded/home.jsp">
+    홈으로 돌아가기
+</a>
+</div>
 <table>
     <thead>
 
@@ -48,5 +60,11 @@
 let test = "<%= resultList %>" ;
 console.log(test)
 </script>
+<%--<script>--%>
+<%--    function transportData(){--%>
+<%--        document.getElementById("list").onsubmit;--%>
+<%--        <%="진짜함수실행?"%>--%>
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>

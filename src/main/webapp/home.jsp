@@ -22,13 +22,16 @@
 </head>
 <body>
 <%
-//    GetApi getApi = new GetApi();
-
-//    int a = getApi.getCount();
-//    System.out.println(a);
-//    ArrayList<Data> resultList = getApi.getData(a);
-    ArrayList<Data> resultList = new ArrayList<>();
-
+    String x;
+    String y;
+    ArrayList<Data> resultList = (ArrayList<Data>) session.getAttribute("list");
+    boolean flag = false;
+    if (resultList == null){
+        System.out.println("위치정보를 입력한 후에 조회해 주세요");
+        flag =false;
+    }else {
+        flag = true;
+    }
 %>
 
 
@@ -77,68 +80,80 @@
     <tbody>
 
     <tr><%
-    for(int i = 0; i < resultList.size(); i++) {
+    if (flag)
+    {
+for(int i = 0; i < 1001; i++) {
 
-            %>
-    <tr>
-        <td>
-            <%=  i+" 번째"%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_MGR_NO()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_WRDOFC()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_MAIN_NM()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_ADRES1()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_ADRES2()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_INSTL_FLOOR()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_INSTL_TY()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_INSTL_MBY()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_SVC_SE()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_CMCWR()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_CNSTC_YEAR()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_INOUT_DOOR()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getX_SWIFI_REMARS3()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getLAT()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getLNT()%>
-        </td>
-        <td>
-            <%= resultList.get(i).getWORK_DTTM()%>
+        %>
+<tr>
+        <div style="text-align: center;">
+    <td>
+        <%=  i+" 번째"%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_MGR_NO()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_WRDOFC()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_MAIN_NM()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_ADRES1()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_ADRES2()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_INSTL_FLOOR()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_INSTL_TY()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_INSTL_MBY()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_SVC_SE()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_CMCWR()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_CNSTC_YEAR()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_INOUT_DOOR()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getX_SWIFI_REMARS3()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getLAT()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getLNT()%>
+    </td>
+    <td>
+        <%= resultList.get(i).getWORK_DTTM()%>
 
 
-        </td>
+    </td>
+        </div>
+</tr>
 
-    </tr>
 
-    <%
-        }
+<%
+    }
+        }else {%>
+       <td colspan="17">
+           <div style="text-align: center;">
+           <%="위치정보를 입력한 후에 조회해 주세요"%>
+           </div>
+       </td>
+
+    <%}
     %>
     </tr>
 
@@ -156,10 +171,15 @@
             var longitude = pos.coords.longitude;
             document.getElementById("latitude").value= latitude
             document.getElementById("longitude").value= longitude
-            alert("현재 위치는 : " + latitude + ", "+ longitude);
+
         });
     }
 
 </script>
+<script language="JavaScript">
+    let test = "<%= resultList %>" ;
+    console.log(test)
+</script>
 </body>
+
 </html>
