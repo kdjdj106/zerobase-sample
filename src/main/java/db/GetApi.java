@@ -66,7 +66,9 @@ public class GetApi {
                 conn.disconnect();
 
                 System.out.println(sb.toString());
-                JsonObject jsonObject = (JsonObject) JsonParser.parseString(sb.toString());
+                JsonReader reader = new JsonReader(new StringReader(sb.toString()));
+                reader.setLenient(true);
+                JsonObject jsonObject = (JsonObject)JsonParser.parseReader(reader);
                 Gson gson = new Gson();
 
 
@@ -224,12 +226,14 @@ public class GetApi {
             }
             Gson gson = new Gson();
 
-            JsonObject jsonObject1 = (JsonObject) JsonParser.parseString(sb.toString());
+            JsonReader reader = new JsonReader(new StringReader(sb.toString()));
+            reader.setLenient(true);
+            JsonObject jsonObject = (JsonObject)JsonParser.parseReader(reader);
             rd.close();
             conn.disconnect();
 
 
-            count = jsonObject1.getAsJsonObject().get("TbPublicWifiInfo").getAsJsonObject()
+            count = jsonObject.getAsJsonObject().get("TbPublicWifiInfo").getAsJsonObject()
                     .get("list_total_count").getAsInt();
             System.out.println(count);
 
