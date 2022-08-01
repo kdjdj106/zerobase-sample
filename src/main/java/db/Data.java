@@ -3,7 +3,7 @@ package db;
 public class Data {
 
     //거리
-    private String distance;
+    private double distance;
     //관리번호
     private String X_SWIFI_MGR_NO;
     //자치구
@@ -37,11 +37,11 @@ public class Data {
     //작업일자
     private String WORK_DTTM;
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 

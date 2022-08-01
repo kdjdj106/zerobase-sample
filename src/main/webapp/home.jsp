@@ -5,6 +5,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="db.GetApi" %>
 <%@ page import="java.util.PriorityQueue" %>
+<%@ page import="db.CompareDistance" %>
+<%@ page import="db.HistoryTest" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -22,16 +24,13 @@
 </head>
 <body>
 <%
-    String x;
-    String y;
+
+    CompareDistance cd = new CompareDistance();
+
     ArrayList<Data> resultList = (ArrayList<Data>) session.getAttribute("list");
+    PriorityQueue<Data> pq = new PriorityQueue<>();
     boolean flag = false;
-    if (resultList == null){
-        System.out.println("위치정보를 입력한 후에 조회해 주세요");
-        flag =false;
-    }else {
-        flag = true;
-    }
+
 %>
 
 
@@ -45,14 +44,51 @@
 <a href="http://localhost:8080/zerobase_study_sample_war_exploded/list.jsp"> Open API 와이파이 정보 가져오기</a>
 </div>
 <div style="display: flex">
-    <p>LAT :</p>
-    <input type="text" id="latitude" value="">
-    <p>LNT :</p>
-    <input type="text" id="longitude" value="">
-    <button onclick="getMyLocation()">내 위치 가져오기</button>
-    <button>주변 와이파이 가져오기</button>
-</div>
+    <form class="checkLocation" action="home.jsp" method="post">
+        <%--    <p>LAT :</p>--%>
+        <input type="text"  placeholder="LAT" id="latitude" name="latitude" value="" required>
+        <%--    <p>LNT :</p>--%>
+        <input type="text"  placeholder="LNT" id="longitude" name="longitude" value="" required>
+        <button class="btn" onclick="getMyLocation()">내 위치 가져오기</button>
 
+        <button  type="submit">주변 와이파이 가져오기</button>
+    </form>
+</div>
+<%
+    String x = request.getParameter("latitude");
+    String y= request.getParameter("longitude");
+    HistoryTest historyTest = new HistoryTest();
+    if (x == null || x.equals("")){
+        System.out.println("x, y 값이 없습니다.");
+    }
+
+    else {
+        if (resultList.size() ==0 || resultList == null){
+            System.out.println("뛰어넘기");
+            %>
+        <script type="text/javascript">
+            alert("먼저 와이파이 정보를 받아야 합니다.");
+        </script>
+
+<%
+        }
+
+        else {
+            pq = cd.compareDistance(resultList, x, y);
+            historyTest.dbInsert(Double.parseDouble(x), Double.parseDouble(y));
+        }
+    }
+    if (pq == null || pq.size() ==0 || resultList.size() ==0 || resultList == null){
+        System.out.println("위치정보를 입력한 후에 조회해 주세요");
+        flag =false;
+    }else {
+        flag = true;
+    }
+
+    System.out.println(x);
+    System.out.println(y);
+
+%>
 
 <table>
     <thead>
@@ -82,61 +118,61 @@
     <tr><%
     if (flag)
     {
-for(int i = 0; i < 1001; i++) {
-
+for(int i = 0; i < 20; i++) {
+        Data db = pq.poll();
         %>
 <tr>
         <div style="text-align: center;">
     <td>
-        <%=  i+" 번째"%>
+        <%= db.getDistance()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_MGR_NO()%>
+        <%= db.getX_SWIFI_MGR_NO()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_WRDOFC()%>
+        <%= db.getX_SWIFI_WRDOFC()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_MAIN_NM()%>
+        <%= db.getX_SWIFI_MAIN_NM()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_ADRES1()%>
+        <%= db.getX_SWIFI_ADRES1()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_ADRES2()%>
+        <%= db.getX_SWIFI_ADRES2()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_INSTL_FLOOR()%>
+        <%= db.getX_SWIFI_INSTL_FLOOR()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_INSTL_TY()%>
+        <%= db.getX_SWIFI_INSTL_TY()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_INSTL_MBY()%>
+        <%= db.getX_SWIFI_INSTL_MBY()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_SVC_SE()%>
+        <%= db.getX_SWIFI_SVC_SE()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_CMCWR()%>
+        <%= db.getX_SWIFI_CMCWR()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_CNSTC_YEAR()%>
+        <%= db.getX_SWIFI_CNSTC_YEAR()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_INOUT_DOOR()%>
+        <%= db.getX_SWIFI_INOUT_DOOR()%>
     </td>
     <td>
-        <%= resultList.get(i).getX_SWIFI_REMARS3()%>
+        <%= db.getX_SWIFI_REMARS3()%>
     </td>
     <td>
-        <%= resultList.get(i).getLAT()%>
+        <%= db.getLAT()%>
     </td>
     <td>
-        <%= resultList.get(i).getLNT()%>
+        <%= db.getLNT()%>
     </td>
     <td>
-        <%= resultList.get(i).getWORK_DTTM()%>
+        <%= db.getWORK_DTTM()%>
 
 
     </td>
@@ -176,10 +212,8 @@ for(int i = 0; i < 1001; i++) {
     }
 
 </script>
-<script language="JavaScript">
-    let test = "<%= resultList %>" ;
-    console.log(test)
-</script>
+
+
 </body>
 
 </html>
