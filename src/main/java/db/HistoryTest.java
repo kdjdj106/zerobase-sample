@@ -7,8 +7,9 @@ import java.util.Map;
 
 public class HistoryTest {
 
-    public int dbCount(){
-        int count =0;
+    //db에 데이터가 얼마나 있는지 알아보는 함수
+    public int dbCount() {
+        int count = 0;
         History history = new History();
         HistoryService historyService = new HistoryService();
 
@@ -48,7 +49,7 @@ public class HistoryTest {
                 int ID = rs.getInt("ID");
                 count = Math.max(ID, count);
 
-                System.out.println(XLocation + " " + " || " + YLocation+" || "+ ID);
+                System.out.println(XLocation + " " + " || " + YLocation + " || " + ID);
 
 
             }
@@ -71,7 +72,7 @@ public class HistoryTest {
                 throw new RuntimeException(e);
             }
             try {
-                if (connection != null &&  !connection.isClosed()) {
+                if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
             } catch (SQLException e) {
@@ -81,10 +82,11 @@ public class HistoryTest {
 
         return count;
     }
-    public List<History> list(){
+
+    // db에 있는 데이터를 리스트 형태로 반환하는 함수
+    public List<History> list() {
 
         List<History> historyList = new ArrayList<>();
-
 
 
         HistoryService historyService = new HistoryService();
@@ -119,7 +121,7 @@ public class HistoryTest {
                 String UseDateTime = rs.getString("UseDateTime");
                 int ID = rs.getInt("ID");
 
-                System.out.println(XLocation + " " + " || " + YLocation+" || "+ ID);
+               // System.out.println(XLocation + " " + " || " + YLocation + " || " + ID);
 
                 History history = new History();
                 history.setX(XLocation);
@@ -154,7 +156,7 @@ public class HistoryTest {
                 throw new RuntimeException(e);
             }
             try {
-                if (connection != null &&  !connection.isClosed()) {
+                if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
             } catch (SQLException e) {
@@ -164,15 +166,16 @@ public class HistoryTest {
         return historyList;
     }
 
-    public void dbInsert(double x, double y){
+    //db에 데이터를 삽입하는 함수
+    public void dbInsert(double x, double y) {
 
         History history = new History();
         history.setX(x);
         history.setY(y);
-        if (dbCount() == 0 ){
+        if (dbCount() == 0) {
             history.setID(1);
-        }else {
-           history.setID(dbCount()+1);
+        } else {
+            history.setID(dbCount() + 1);
         }
         HistoryService historyService = new HistoryService();
 
@@ -199,8 +202,6 @@ public class HistoryTest {
         double y1 = y;
 
 
-
-
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
 
@@ -214,12 +215,11 @@ public class HistoryTest {
             preparedStatement.setInt(3, history.getID());
 
 
-
             int affected = preparedStatement.executeUpdate();
 
-            if (affected>0){
+            if (affected > 0) {
                 System.out.println("저장 성공");
-            }else {
+            } else {
                 System.out.println("실패");
             }
 
@@ -241,7 +241,7 @@ public class HistoryTest {
                 throw new RuntimeException(e);
             }
             try {
-                if (connection != null &&  !connection.isClosed()) {
+                if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
             } catch (SQLException e) {
@@ -251,7 +251,8 @@ public class HistoryTest {
 
     }
 
-    public void dbDelete(String str){
+    //db에 데이트를 지우는 함수
+    public void dbDelete(String str) {
 
         History history = new History();
         HistoryService historyService = new HistoryService();
@@ -276,7 +277,7 @@ public class HistoryTest {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
 
-        String testDatetime ="2022-08-02 01:04:12";
+        String testDatetime = "2022-08-02 01:04:12";
         String datetime = str;
 
         try {
@@ -284,19 +285,17 @@ public class HistoryTest {
 
 
             String sql = " DELETE from history " +
-                    " where UseDateTime = ?; ";
+                    " where ID = ?; ";
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, str);
-
-
+            preparedStatement.setInt(1, Integer.parseInt(str));
 
 
             int affected = preparedStatement.executeUpdate();
 
-            if (affected>0){
+            if (affected > 0) {
                 System.out.println("삭제 성공");
-            }else {
+            } else {
                 System.out.println("삭제 실패");
             }
 
@@ -318,7 +317,7 @@ public class HistoryTest {
                 throw new RuntimeException(e);
             }
             try {
-                if (connection != null &&  !connection.isClosed()) {
+                if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
             } catch (SQLException e) {
@@ -335,6 +334,7 @@ public class HistoryTest {
 //        historyTest.dbInsert(1.1, 2.2 );
 //        historyTest.dbSelect();
 //        historyTest.dbDelete("2022-08-02 01:09:45");
-        System.out.println(historyTest.dbCount());
+        System.out.println(historyTest.getClass().getName());
+        System.out.println(historyTest.getClass().getSimpleName());
     }
 }

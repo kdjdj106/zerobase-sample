@@ -25,7 +25,7 @@ public class GetApi {
     static ArrayList<Data> resultList = new ArrayList<>();
 
 
-
+    // 데이터를 가져오는 함수
     public  ArrayList<Data> getData(int count) {
         ArrayList<Data> list = new ArrayList<>();
         while (Integer.parseInt(end) <= count) {
@@ -192,6 +192,8 @@ public class GetApi {
         }
         return list;
     }
+
+    // 데이터가 총 몇개인지 가져오는 함수
     public  int getCount() {
         int count = 0;
         String getCountStart = Integer.toString(1);

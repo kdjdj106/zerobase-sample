@@ -1,6 +1,8 @@
 package db;
 
 public class Data {
+    //리스트에 넣을 자료
+
 
     //거리
     private double distance;

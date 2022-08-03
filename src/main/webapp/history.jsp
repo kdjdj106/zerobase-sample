@@ -1,6 +1,7 @@
 <%@ page import="db.History" %>
 <%@ page import="db.HistoryTest" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: kdjdj
   Date: 2022-07-30
@@ -13,15 +14,31 @@
     <title>Title</title>
 </head>
 <style>
-
     table {
         width: 100%;
+        border: 1px solid #444444;
+        border-collapse: collapse;
     }
 
     th, td {
-        border: solid 1px #000;
+        border: 1px solid #444444;
+        padding: 10px;
+        text-align: center;
+
     }
 
+    thead tr {
+        background-color: #0d47a1;
+        color: #ffffff;
+    }
+
+    tbody tr:nth-child(2n) {
+        background-color: #bbdefb;
+    }
+
+    tbody tr:nth-child(2n+1) {
+        background-color: #e3f2fd;
+    }
 </style>
 <body>
 <h1> 위치 히스토리 목록 </h1>
@@ -35,36 +52,90 @@
 </div>
 
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>X좌표</th>
-        <th>Y좌표</th>
-        <th>조회일자</th>
-        <th>비고</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <% HistoryTest historyTest = new HistoryTest();
-        List<History> list= historyTest.list();
-        for (History history : list){ %>
+<table id="userList">
+    <div style="text-align: center;">
+        <thead>
+
         <tr>
-        <td><%=history.getID()%></td>
-        <td><%=history.getX()%></td>
-        <td><%= history.getY()%></td>
-        <td><%= history.getUsedDateTime()%></td>
-        <td>삭제버튼 예정</td>
+            <th>ID</th>
+            <th>X좌표</th>
+            <th>Y좌표</th>
+            <th>조회일자</th>
+            <th>비고</th>
+        </tr>
+        </thead>
+    </div>
+    <tbody>
+    <form class="checkLocation" action="history.jsp" method="post">
+
+        <%
+            HistoryTest historyTest = new HistoryTest();
+            String ID = null;
+            String num = null;
+            ID = request.getParameter("ID");
+            num = request.getParameter("ID2");
+            if (num == null || num.equals("")) {
+                System.out.println("ID = " + ID);
+                System.out.println("num =  " + num);
+            } else {
+
+                // 받아온 데이터(ID값(PK))가 null 이 아닐시 데이터 삭제
+                historyTest.dbDelete(num);
+            }
+            List<History> list = historyTest.list();%>
+        <input type="hidden" id="ID2" name="ID2" value=""/>
+
+        <%
+            for (History history : list) {
+        %>
+
+        <tr>
+
+            <td style="text-align: center"><%=history.getID()%>
+            </td>
+
+            <td style="text-align: center"><%=history.getX()%>
+            </td>
+            <td style="text-align: center"><%= history.getY()%>
+            </td>
+            <td style="text-align: center"><%= history.getUsedDateTime()%>
+            </td>
+            <td style="text-align: center">
+
+                <button class="btn btn-danger pull-right"
+                        onclick="getUserName()" id="ID" name="ID" value="" type="submit">삭제
+                </button>
+
+            </td>
+
         </tr>
 
         <%
             }
         %>
-    </tr>
+
+    </form>
     </tbody>
+
 </table>
 
+
+<script>
+    function getUserName() {
+
+        let userList = document.getElementById('userList');
+        console.log("클릭!");
+        for (let i = 1; i < userList.rows.length; i++) {
+            userList.rows[i].cells[4].onclick = function () {
+
+                var userName = userList.rows[i].cells[0].innerText;
+                document.getElementById("ID").value = userName;
+                document.getElementById("ID2").value = userName;
+                console.log(userName);
+            }
+        }
+    }
+</script>
 
 </body>
 </html>
