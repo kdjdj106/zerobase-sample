@@ -79,7 +79,7 @@
                 System.out.println("num =  " + num);
             } else {
 
-                // 받아온 데이터(ID값(PK))가 null 이 아닐시 데이터 삭제
+                // 받아온 데이터(ID값(PK))가 null 이 아닐시 ID값을 기반으로 데이터 삭제
                 historyTest.dbDelete(num);
             }
             List<History> list = historyTest.list();%>

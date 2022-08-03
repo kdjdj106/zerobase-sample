@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class HistoryTest {
 
-    //db에 데이터가 얼마나 있는지 알아보는 함수
+    //db에 제일큰 ID값(PK)을 리턴하는 함수
     public int dbCount() {
         int count = 0;
         History history = new History();
@@ -166,15 +166,17 @@ public class HistoryTest {
         return historyList;
     }
 
-    //db에 데이터를 삽입하는 함수
+    //db에 데이터를 삽입하는 함수 단 dbCount()을 사용하여 받아온 값 +1을 ID(PK)로 사용하여 PK중복 방지
     public void dbInsert(double x, double y) {
 
         History history = new History();
         history.setX(x);
         history.setY(y);
+        //db에 아무데이터도 없을경우 ID를 자동으로 1로 설정
         if (dbCount() == 0) {
             history.setID(1);
         } else {
+
             history.setID(dbCount() + 1);
         }
         HistoryService historyService = new HistoryService();
@@ -251,7 +253,7 @@ public class HistoryTest {
 
     }
 
-    //db에 데이트를 지우는 함수
+    //db에 데이터를 ID값을 기반으로 지우는 함수
     public void dbDelete(String str) {
 
         History history = new History();
